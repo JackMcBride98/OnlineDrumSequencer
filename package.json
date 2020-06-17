@@ -1,0 +1,28 @@
+{
+  "name": "online-drum-sequencer",
+  "version": "1.0.0",
+  "description": "An online drum sequencer, made by Jack and Tom",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Muccy98/OnlineDrumSequencer.git"
+  },
+  "keywords": [
+    "Online",
+    "Drum",
+    "Sequencer"
+  ],
+  "author": "Jack McBride and Tom Ballantyne",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Muccy98/OnlineDrumSequencer/issues"
+  },
+  "homepage": "https://github.com/Muccy98/OnlineDrumSequencer#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^2.3.0"
+  }
+}
