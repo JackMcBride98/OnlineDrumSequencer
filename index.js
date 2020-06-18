@@ -12,6 +12,10 @@ var buttons = [false, false, false, false];
 io.on('connection', function(socket){
     console.log('a user connected');
 
+    for (let i = 0; i < buttons.length; i++){
+        socket.emit('button click', {buttonNumber: i + 1, buttonState: buttons[i]})
+    }
+
     socket.on('disconnect', function(){
         console.log('a user disconnected');
     })
