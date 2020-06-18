@@ -10,7 +10,7 @@ $(function(){
         console.log('play button clicked');
         myMusic.play();
     })
-
+    
     buttons.forEach(function(button){
         button.click(function(){
             buttonNumber = buttons.indexOf(button) + 1;
