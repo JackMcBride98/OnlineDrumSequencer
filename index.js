@@ -7,8 +7,8 @@ const path = require('path');
 
 app.use(express.static(__dirname));
 
-var steps = 8;
-var channels = 2;
+var steps = 16;
+var channels = 5;
 var buttonStates = Array(channels).fill().map(() => Array(steps).fill(false) );
 
 io.on('connection', function(socket){
@@ -17,7 +17,7 @@ io.on('connection', function(socket){
     var initObject = {
         channels: channels,
         steps: steps,
-        channelNames: ["kick", "snare"] 
+        channelNames: ["kick", "snare", "hat", "bongo", "george"] 
     }
 
     socket.emit('initialise', initObject);

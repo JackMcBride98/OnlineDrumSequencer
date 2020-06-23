@@ -17,7 +17,7 @@ $(function(){
         channels = data.channels;
         channelNames = data.channelNames;
         channelAudio = new Array(channels);
-        var buttonStates = Array(channels).fill().map( () => Array(steps).fill(false) );
+        buttonStates = Array(channels).fill().map( () => Array(steps).fill(false) );
         for(let i = 0; i < channels; i++){
             channelAudio[i] = document.getElementById(data.channelNames[i])
             channelContainer.append("<div class = 'channel' id = c"+ i +"><p>"+ data.channelNames[i] +"</p> </div>");
@@ -38,6 +38,7 @@ $(function(){
 
     var playing = false;
     var timestep = 0;
+    var delay = 250;
 
     playButton.click(function(){
         if (!playing){
@@ -62,7 +63,7 @@ $(function(){
         }
         setTimeout(function(){
             if(playing){play(timestep)}
-        }, 500)
+        }, delay)
     }
 
     stopButton.click(function(){
