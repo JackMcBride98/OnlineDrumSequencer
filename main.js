@@ -5,10 +5,17 @@ $(function(){
     var buttons = [$('#1'), $('#2'), $('#3'), $('#4')];
     // var myMusic = $('#music');
     var myMusic = document.getElementById("music");
+    let playing = false;    // Variable to track play button press
 
     playButton.click(function(){
-        console.log('play button clicked');
-        myMusic.play();
+        playing = !playing;
+        while(playing){
+            setTimeout(function () {
+                for(let i = 0; i < 4; i++){
+                    console.log('Hello world!!!!!');
+                }
+            }, 1000);
+        }
     })
     
     buttons.forEach(function(button){
