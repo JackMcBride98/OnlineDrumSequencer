@@ -9,18 +9,21 @@
     </head>
     <body>
         <h1>
-            Online Collaborative Button Background Changing Clicking Tool
+            Online Drum Sequencer
         </h1>
-        <p>Press a button!!!</p>
-        <audio id="music">
+        <p>Make Drum Patterns Online</p>
+        <audio id="kick">
             <source src="Kick.wav" type="audio/wav">    
         </audio>
-        <button id="play">Play </button>
-        <button id="stop">Stop</button>
-        <button id = "1">1</button>
-        <button id= "2">2</button>
-        <button id ="3">3</button>
-        <button id = "4">4</button>
+        <audio id="snare">
+            <source src="snare.wav" type="audio/wav">    
+        </audio>
+        <div class = "controls">
+            <button id="play">Play </button>
+            <button id="stop">Stop</button>
+        </div>
+
+        <div class = "channel-container"></div>
     </body>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>

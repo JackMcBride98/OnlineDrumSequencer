@@ -3,27 +3,61 @@ $(function(){
     let socket = io();
     var playButton = $('#play');
     var stopButton = $('#stop');
-    var buttons = [$('#1'), $('#2'), $('#3'), $('#4')];
-    var buttonStates = [false,false,false,false];
+
+    var steps = 4;
+    var channels = 3;
+    var buttonStates = Array(channels).fill().map(() => Array(steps).fill(false) );
+    var channelAudio;
+    var channelNames;
+    var channelContainer = $('.channel-container');
+    channelContainer.html("");
+
+    socket.on('initialise',function(data){
+        steps = data.steps;
+        channels = data.channels;
+        channelNames = data.channelNames;
+        channelAudio = new Array(channels);
+        var buttonStates = Array(channels).fill().map( () => Array(steps).fill(false) );
+        for(let i = 0; i < channels; i++){
+            channelAudio[i] = document.getElementById(data.channelNames[i])
+            channelContainer.append("<div class = 'channel' id = c"+ i +"><p>"+ data.channelNames[i] +"</p> </div>");
+
+            for(let j = 0; j < steps; j++){
+                $('.channel#c'+i).append("<button id = b"+ j +">"+ j +"</button>")
+            }
+        }
+
+        $('.channel button').click(function(){
+            var parentID = $(this).parent().attr("id");
+            var ID = this.id;
+            row = parentID.split('c')[1];
+            column = ID.split('b')[1];
+            socket.emit('button click', {row: row, column: column})
+        })
+    })
+
     var playing = false;
     var timestep = 0;
-    // var myMusic = $('#music');
-    var myMusic = document.getElementById("music");
 
     playButton.click(function(){
-        playing = true;
-        play(timestep);
+        if (!playing){
+            playing = true;
+            play(timestep);
+        }
     })
 
     function play(timestep){
-        if (buttonStates[timestep]){
-            myMusic.pause()
-            myMusic.currentTime = 0;
-            myMusic.play()
-            console.log((timestep+1) + ' kick' )
+        for (let i = 0; i < channels; i++){
+            if (buttonStates[i][timestep]){
+                channelAudio[i].pause()
+                channelAudio[i].currentTime = 0;
+                channelAudio[i].play()
+                console.log((timestep+1) + channelNames[i] )
+            }
         }
+
         timestep++;
-        if(timestep > 3){
+        if(timestep > steps-1){
             timestep = 0;
         }
         setTimeout(function(){
@@ -36,38 +70,14 @@ $(function(){
         console.log('STAHP!') 
     })
     
-    buttons.forEach(function(button){
-        button.click(function(){
-            buttonNumber = buttons.indexOf(button) + 1;
-            console.log('button ' + buttonNumber + ' clicked!');
-            socket.emit('button click', buttonNumber);
-        })
-    })
-
-    // button1.click(function(){
-    //     console.log('button 1 clicked');
-    //     socket.emit('button click', 1);
-    // })
-
     socket.on('button click', function(data){
-        if (data.buttonState){
-            buttons[data.buttonNumber-1].css('background', 'red');
-            buttonStates[data.buttonNumber-1] = true;
+        if (data.state){
+            $('.channel#c'+data.row+ " button#b"+data.column).css('background','red')
+            buttonStates[data.row][data.column] = true;
         }
         else{
-            buttons[data.buttonNumber-1].css('background', 'white');
-            buttonStates[data.buttonNumber-1] = false;
+            $('.channel#c'+data.row+ " button#b"+data.column).css('background','white')
+            buttonStates[data.row][data.column] = false;
         }
     })
 })
-
-function sleep(milliseconds) {
-    var start = new Date().getTime();
-    for (var i = 0; i < 1e7; i++) {
-      if ((new Date().getTime() - start) > milliseconds){
-        break;
-      }
-    }
-  }
-
-//Not sure if we need to use JQuery
