@@ -17,13 +17,19 @@ $(function(){
         channels = data.channels;
         channelNames = data.channelNames;
         channelAudio = new Array(channels);
-        buttonStates = Array(channels).fill().map( () => Array(steps).fill(false) );
+        buttonStates = data.buttonStates;
         for(let i = 0; i < channels; i++){
             channelAudio[i] = document.getElementById(data.channelNames[i])
             channelContainer.append("<div class = 'channel' id = c"+ i +"><p>"+ data.channelNames[i] +"</p> </div>");
 
             for(let j = 0; j < steps; j++){
                 $('.channel#c'+i).append("<button id = b"+ j +">"+ j +"</button>")
+                if(buttonStates[i][j]){
+                    $('.channel#c'+i+ " button#b"+j).css('background','red')
+                }
+                else{
+                    $('.channel#c'+i+ " button#b"+j).css('background','white')
+                }
             }
         }
 
@@ -43,6 +49,7 @@ $(function(){
     playButton.click(function(){
         if (!playing){
             playing = true;
+            socket.emit('play');
             play(timestep);
         }
     })
@@ -67,8 +74,11 @@ $(function(){
     }
 
     stopButton.click(function(){
-        playing = false;
-        console.log('STAHP!') 
+        if (playing){
+            playing = false;
+            socket.emit('stop');
+            console.log('STAHP!'); 
+        }
     })
     
     socket.on('button click', function(data){
@@ -80,5 +90,14 @@ $(function(){
             $('.channel#c'+data.row+ " button#b"+data.column).css('background','white')
             buttonStates[data.row][data.column] = false;
         }
+    })
+
+    socket.on('play', function(){
+        playing = true;
+        play(timestep);
+    })
+
+    socket.on('stop', function(){
+        playing = false;
     })
 })
