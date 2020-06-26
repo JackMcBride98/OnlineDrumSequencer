@@ -7,8 +7,8 @@ const path = require('path');
 
 app.use(express.static(__dirname));
 
-var steps = 8;
-var channels = 2;
+var steps = 16;
+var channels = 5;
 var buttonStates = Array(channels).fill().map(() => Array(steps).fill(false) );
 
 io.on('connection', function(socket){
@@ -17,16 +17,11 @@ io.on('connection', function(socket){
     var initObject = {
         channels: channels,
         steps: steps,
-        channelNames: ["kick", "snare"] 
+        channelNames: ["kick", "snare", "hat", "bongo", "george"],
+        buttonStates: buttonStates 
     }
 
     socket.emit('initialise', initObject);
-
-    for(let i = 0; i < channels; i++){
-        for (let j = 0; j < steps; j++){
-            socket.emit('button click',{row:i, column:j, state:buttonStates[i][j]})
-        }
-    }
 
     socket.on('disconnect', function(){
         console.log('a user disconnected');
@@ -37,6 +32,14 @@ io.on('connection', function(socket){
         buttonStates[data.row][data.column] = !buttonStates[data.row][data.column];
         console.log("button row:" + data.row + " column:" + data.column + " is in state " + buttonStates[data.row][data.column])
         io.emit('button click', {row:data.row, column:data.column, state:buttonStates[data.row][data.column]})
+    })
+
+    socket.on('play', function(){
+        socket.broadcast.emit('play')
+    })
+
+    socket.on('stop', function(){
+        socket.broadcast.emit('stop')
     })
 });
 
