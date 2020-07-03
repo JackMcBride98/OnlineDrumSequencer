@@ -13,12 +13,14 @@ var buttonStates = Array(channels).fill().map(() => Array(steps).fill(false) );
 
 io.on('connection', function(socket){
     console.log('a user connected');
+    socket.colour = getRandomColour();
 
     var initObject = {
         channels: channels,
         steps: steps,
         channelNames: ["kick", "snare", "hat", "bongo", "george"],
-        buttonStates: buttonStates 
+        buttonStates: buttonStates,
+        colour: socket.colour 
     }
 
     socket.emit('initialise', initObject);
@@ -31,7 +33,7 @@ io.on('connection', function(socket){
         
         buttonStates[data.row][data.column] = !buttonStates[data.row][data.column];
         console.log("button row:" + data.row + " column:" + data.column + " is in state " + buttonStates[data.row][data.column])
-        io.emit('button click', {row:data.row, column:data.column, state:buttonStates[data.row][data.column]})
+        io.emit('button click', {row:data.row, column:data.column, state:buttonStates[data.row][data.column], colour:socket.colour})
     })
 
     socket.on('play', function(){
@@ -41,8 +43,19 @@ io.on('connection', function(socket){
     socket.on('stop', function(){
         socket.broadcast.emit('stop')
     })
+
+    socket.on('bpm',function(data){
+        io.emit('bpm', data);
+    })
 });
 
 http.listen(3000, () => {
     console.log('listening on *:3000');
 })
+
+function getRandomColour(){
+    let x = Math.floor(Math.random()*256)-1;
+    let y = Math.floor(Math.random()*256)-1;
+    let z = Math.floor(Math.random()*256)-1;
+    return ("rgba(" + x + "," + y + "," + z + ",1)");
+}

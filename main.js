@@ -22,10 +22,11 @@ $(function(){
             channelAudio[i] = document.getElementById(data.channelNames[i])
             channelContainer.append("<div class = 'channel' id = c"+ i +"><p>"+ data.channelNames[i] +"</p> </div>");
 
+            channel = $('.channel#c'+i);
             for(let j = 0; j < steps; j++){
-                $('.channel#c'+i).append("<button id = b"+ j +">"+ j +"</button>")
+                channel.append("<button id = b"+ j +"> </button>")
                 if(buttonStates[i][j]){
-                    $('.channel#c'+i+ " button#b"+j).css('background','red')
+                    $('.channel#c'+i+ " button#b"+j).css('background',data.colour)
                 }
                 else{
                     $('.channel#c'+i+ " button#b"+j).css('background','white')
@@ -80,10 +81,23 @@ $(function(){
             console.log('STAHP!'); 
         }
     })
+
+    var bpmSlider = $('#bpmSlider')
+
+    bpmSlider.on('change', function(){
+        console.log(this.value)
+        sliderValue = this.value;
+        let newDelay = 60000/sliderValue * 2;
+        socket.emit('bpm', newDelay);
+    })
+
+    socket.on('bpm',function(data){
+        delay = data;
+    })
     
     socket.on('button click', function(data){
         if (data.state){
-            $('.channel#c'+data.row+ " button#b"+data.column).css('background','red')
+            $('.channel#c'+data.row+ " button#b"+data.column).css('background',data.colour)
             buttonStates[data.row][data.column] = true;
         }
         else{
