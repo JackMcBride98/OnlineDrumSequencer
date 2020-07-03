@@ -93,8 +93,10 @@ $(function(){
     })
 
     socket.on('play', function(){
-        playing = true;
-        play(timestep);
+        if (!playing){
+            playing = true;
+            play(timestep);
+        }
     })
 
     socket.on('stop', function(){

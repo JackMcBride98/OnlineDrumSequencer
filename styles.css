@@ -1,0 +1,104 @@
+/* GLOBAL SETTINGS */
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding: 0px;
+    margin: 0px;
+}
+
+/* HEADER */
+header {
+    background: radial-gradient(circle, rgba(96,210,255,1) 0%, rgba(255,255,255,1) 100%);
+    display: block;
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    border-bottom: black double 4px;
+}
+
+header h1 {
+    position: relative;
+    display: block;
+    text-align: center;
+}
+
+header p{
+    position: relative;
+    display: block;
+    text-align: center;
+    padding: 10px, 0px;
+}
+
+/* CSS FOR DRUM MACHINE */
+
+.drumMachine {
+    position: relative;
+    display: table;
+    width: auto;
+    margin: auto;
+    top: 130px;
+    border: black solid 2px;
+    border-radius: 12px;
+}
+
+/* PLAY AND STOP BUTTONS */
+.controls {
+    display: flex;
+    position: relative;
+    left: 87px;
+}
+.controls button {
+    background: white;
+    border: black solid 2px;
+    border-radius: 8px;
+    width: 50px;
+    height: 30px;
+    margin: 0px 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.controls button:focus { 
+    outline:0;
+}
+
+#play:hover {
+    background-color: rgb(3, 209, 3, 40%);
+}
+
+#play:after {
+    content: ' \25B6';
+}
+
+#stop:hover {
+    background-color: rgb(255, 0, 0, 40%);
+}
+
+#stop:after {
+    content: ' \25FE';
+}
+
+/* CSS FOR CHANNELS */
+
+.channel {
+    padding-bottom: 10px ;
+}
+
+.channel button {
+    border: black solid 2px;
+    padding: 30px 20px;
+    margin: 0px 5px;
+    border-radius: 12px;
+}
+
+/* Gets rid of default blue outline when buttons are clicked */
+.channel button:focus { 
+    outline:0;
+}
+
+.channel p {
+    display: inline-block;
+    padding: 0px 20px;
+    width: 40px;
+}
+
