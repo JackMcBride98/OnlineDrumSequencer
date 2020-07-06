@@ -41,6 +41,10 @@ $(function(){
             column = ID.split('b')[1];
             socket.emit('button click', {row: row, column: column})
         })
+
+        delay = (60000/data.bpm) / 2;
+        bpmValueDisplay.text(data.bpm);
+        bpmSlider.val(data.bpm);
     })
 
     var playing = false;
@@ -83,16 +87,17 @@ $(function(){
     })
 
     var bpmSlider = $('#bpmSlider')
+    var bpmValueDisplay = $('#bpmValue')
 
     bpmSlider.on('change', function(){
-        console.log(this.value)
-        sliderValue = this.value;
-        let newDelay = 60000/sliderValue * 2;
-        socket.emit('bpm', newDelay);
+        bpm = this.value;
+        socket.emit('bpm', bpm);
     })
 
     socket.on('bpm',function(data){
-        delay = data;
+        delay = (60000/data) / 2;
+        bpmValueDisplay.text(data);
+        bpmSlider.val(data);
     })
     
     socket.on('button click', function(data){
