@@ -10,6 +10,7 @@ app.use(express.static(__dirname));
 var steps = 16;
 var channels = 5;
 var buttonStates = Array(channels).fill().map(() => Array(steps).fill(false) );
+var bpm = 100;
 
 io.on('connection', function(socket){
     console.log('a user connected');
@@ -20,7 +21,8 @@ io.on('connection', function(socket){
         steps: steps,
         channelNames: ["kick", "snare", "hat", "bongo", "george"],
         buttonStates: buttonStates,
-        colour: socket.colour 
+        colour: socket.colour,
+        bpm: bpm 
     }
 
     socket.emit('initialise', initObject);
@@ -45,6 +47,7 @@ io.on('connection', function(socket){
     })
 
     socket.on('bpm',function(data){
+        bpm = data;
         io.emit('bpm', data);
     })
 });
