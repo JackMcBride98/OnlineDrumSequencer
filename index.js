@@ -46,6 +46,10 @@ io.on('connection', function(socket){
         socket.broadcast.emit('stop')
     })
 
+    socket.on('pause',function(){
+        socket.broadcast.emit('pause')
+    })
+
     socket.on('bpm',function(data){
         bpm = data;
         io.emit('bpm', data);

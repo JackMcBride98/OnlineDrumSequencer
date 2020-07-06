@@ -3,6 +3,7 @@ $(function(){
     let socket = io();
     var playButton = $('#play');
     var stopButton = $('#stop');
+    var pauseButton = $('#pause');
 
     var steps = 4;
     var channels = 3;
@@ -59,13 +60,12 @@ $(function(){
         }
     })
 
-    function play(timestep){
+    function play(step){
         for (let i = 0; i < channels; i++){
-            if (buttonStates[i][timestep]){
+            if (buttonStates[i][step]){
                 channelAudio[i].pause()
                 channelAudio[i].currentTime = 0;
                 channelAudio[i].play()
-                console.log((timestep+1) + channelNames[i] )
             }
         }
 
@@ -82,7 +82,14 @@ $(function(){
         if (playing){
             playing = false;
             socket.emit('stop');
-            console.log('STAHP!'); 
+            timestep = 0;
+        }
+    })
+
+    pauseButton.click(function(){
+        if (playing){
+            playing = false;
+            socket.emit('pause');
         }
     })
 
@@ -120,5 +127,12 @@ $(function(){
 
     socket.on('stop', function(){
         playing = false;
+        timestep = 0;
+    })
+
+    socket.on('pause',function(){
+        if (playing){
+            playing = false;
+        }
     })
 })
