@@ -7,7 +7,7 @@ $(function(){
 
     var steps = 4;
     var channels = 3;
-    var buttonStates = Array(channels).fill().map(() => Array(steps).fill(false) );
+    var buttonStates = Array(channels).fill().map(() => Array(steps).fill("") );
     var channelAudio;
     var channelNames;
     var channelContainer = $('.channel-container');
@@ -26,11 +26,11 @@ $(function(){
             channel = $('.channel#c'+i);
             for(let j = 0; j < steps; j++){
                 channel.append("<button id = b"+ j +"> </button>")
-                if(buttonStates[i][j]){
-                    $('.channel#c'+i+ " button#b"+j).css('background',data.colour)
+                if(buttonStates[i][j] === ""){
+                    $('.channel#c'+i+ " button#b"+j).css('background','white')
                 }
                 else{
-                    $('.channel#c'+i+ " button#b"+j).css('background','white')
+                    $('.channel#c'+i+ " button#b"+j).css('background',buttonStates[i][j])
                 }
             }
         }
@@ -99,6 +99,34 @@ $(function(){
     bpmSlider.on('change', function(){
         bpm = this.value;
         socket.emit('bpm', bpm);
+    })
+
+    document.onmousemove = handleMouseMove;
+    var cursorContainer = $('.cursor-container');
+
+    function handleMouseMove(event){
+        socket.emit('cursor', {x:event.pageX, y:event.pageY});
+    }
+
+    socket.on('cursor',function(data){
+        //change cursor object location to data.x and data.y
+        id = data.colour.replace(/[(),]+/g, "")
+        console.log(id + " " + data.x + ", " + data.y)
+        cursor = $('#cur'+id);
+        cursor.css('left', data.x)
+        cursor.css('top', data.y)
+    })
+
+    socket.on('add cursor', function(data){
+        id = data.replace(/[(),]+/g, "");
+        console.log('cursor added with id ' + id)
+        cursorContainer.append("<div class = 'cursor' id =cur"+ id +"></div>")
+        $('#cur'+id).css('background',data)
+    })
+
+    socket.on('remove cursor', function(data){
+        id = data.replace(/[(),]+/g, "");
+        $('#cur'+id).remove()
     })
 
     socket.on('bpm',function(data){
