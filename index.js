@@ -15,6 +15,9 @@ var colours = [];
 
 io.on('connection', function(socket){
     console.log('a user connected');
+    colours.forEach(function(colour){
+        socket.emit('add cursor',colour)
+    })
     let newColour = getRandomColour();
     if (colours.length < 1){
         socket.colour = newColour;
@@ -27,6 +30,7 @@ io.on('connection', function(socket){
         socket.colour = newColour;
         colours.push(newColour)
     }
+    socket.broadcast.emit('add cursor', socket.colour)
 
     var initObject = {
         channels: channels,
@@ -38,10 +42,6 @@ io.on('connection', function(socket){
     } 
 
     socket.emit('initialise', initObject);
-    socket.broadcast.emit('add cursor', socket.colour)
-    colours.forEach(function(colour){
-        socket.emit('add cursor',colour)
-    })
 
     socket.on('disconnect', function(){
         colours.splice(colours.indexOf(socket.colour),1)
@@ -56,7 +56,6 @@ io.on('connection', function(socket){
         else{
             buttonStates[data.row][data.column] = "";
         }
-        // buttonStates[data.row][data.column] = !buttonStates[data.row][data.column];
         console.log("button row:" + data.row + " column:" + data.column + " is in state " + buttonStates[data.row][data.column])
         io.emit('button click', {row:data.row, column:data.column, state:buttonStates[data.row][data.column], colour:socket.colour})
     })
