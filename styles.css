@@ -8,8 +8,7 @@ body {
 /* HEADER */
 header {
     background: radial-gradient(circle, rgba(96,210,255,1) 0%, rgba(255,255,255,1) 100%);
-    display: block;
-    position: absolute;
+    position: relative;
     top: 0px;
     width: 100%;
     border-bottom: black double 4px;
@@ -17,13 +16,12 @@ header {
 
 header h1 {
     position: relative;
-    display: block;
     text-align: center;
+    margin: 0px;
 }
 
 header p{
     position: relative;
-    display: block;
     text-align: center;
     padding: 10px, 0px;
 }
@@ -35,23 +33,25 @@ header p{
     display: table;
     width: auto;
     margin: auto;
-    top: 130px;
+    margin-top: 20px;
     border: black solid 2px;
-    border-radius: 12px;
+    border-radius: 8px;
 }
 
 /* PLAY AND STOP BUTTONS */
 .controls {
     display: flex;
-    position: relative;
+    justify-content: center;
+    
     left: 87px;
 }
+
 .controls button {
     background: white;
     border: black solid 2px;
     border-radius: 8px;
     width: 50px;
-    height: 30px;
+    height: 40px;
     margin: 0px 5px;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -78,10 +78,22 @@ header p{
     content: ' \25FE';
 }
 
+#pause:after {
+    transform: rotate(-90deg);
+    content: '=';
+}
+
 /* CSS FOR CHANNELS */
+
+.channel-container {
+    display: flex;
+    flex-direction: column;
+}
 
 .channel {
     padding-bottom: 10px ;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .channel button {
@@ -89,6 +101,11 @@ header p{
     padding: 30px 20px;
     margin: 0px 5px;
     border-radius: 12px;
+}
+
+.channel button:hover {
+    cursor: pointer;
+    border: black dotted 2px;
 }
 
 /* Gets rid of default blue outline when buttons are clicked */
@@ -101,4 +118,12 @@ header p{
     padding: 0px 20px;
     width: 40px;
 }
+
+.cursor {
+    position: absolute;
+    background: black;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+  }
 

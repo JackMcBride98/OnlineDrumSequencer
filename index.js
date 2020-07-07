@@ -9,12 +9,29 @@ app.use(express.static(__dirname));
 
 var steps = 16;
 var channels = 5;
-var buttonStates = Array(channels).fill().map(() => Array(steps).fill(false) );
+var buttonStates = Array(channels).fill().map(() => Array(steps).fill("") );
 var bpm = 100;
+var colours = [];
+var volValues = Array(channels).fill(80);
 
 io.on('connection', function(socket){
     console.log('a user connected');
-    socket.colour = getRandomColour();
+    colours.forEach(function(colour){
+        socket.emit('add cursor',colour)
+    })
+    let newColour = getRandomColour();
+    if (colours.length < 1){
+        socket.colour = newColour;
+        colours.push(newColour)
+    }
+    else{
+        while(!!~colours.indexOf(newColour)){
+            newColour = getRandomColour();
+        }
+        socket.colour = newColour;
+        colours.push(newColour)
+    }
+    socket.broadcast.emit('add cursor', socket.colour)
 
     var initObject = {
         channels: channels,
@@ -22,18 +39,25 @@ io.on('connection', function(socket){
         channelNames: ["kick", "snare", "hat", "bongo", "george"],
         buttonStates: buttonStates,
         colour: socket.colour,
-        bpm: bpm 
-    }
+        bpm: bpm, 
+        volValues: volValues
+    } 
 
     socket.emit('initialise', initObject);
 
     socket.on('disconnect', function(){
+        colours.splice(colours.indexOf(socket.colour),1)
+        socket.broadcast.emit('remove cursor',socket.colour)
         console.log('a user disconnected');
     })
     
     socket.on('button click',function(data){
-        
-        buttonStates[data.row][data.column] = !buttonStates[data.row][data.column];
+        if (buttonStates[data.row][data.column] === ""){
+            buttonStates[data.row][data.column] = socket.colour;
+        }
+        else{
+            buttonStates[data.row][data.column] = "";
+        }
         console.log("button row:" + data.row + " column:" + data.column + " is in state " + buttonStates[data.row][data.column])
         io.emit('button click', {row:data.row, column:data.column, state:buttonStates[data.row][data.column], colour:socket.colour})
     })
@@ -53,6 +77,16 @@ io.on('connection', function(socket){
     socket.on('bpm',function(data){
         bpm = data;
         io.emit('bpm', data);
+    })
+
+    socket.on('cursor', function(data){
+        data.colour = socket.colour;
+        socket.broadcast.emit('cursor', data);
+    })
+
+    socket.on('volume change', function(data){
+        volValues[data.volChannel[7]] = data.vol;
+        io.emit('volume change', data)
     })
 });
 
