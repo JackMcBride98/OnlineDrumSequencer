@@ -19,9 +19,10 @@ $(function(){
         channelNames = data.channelNames;
         channelAudio = new Array(channels);
         buttonStates = data.buttonStates;
+        volValues = data.volValues;
         for(let i = 0; i < channels; i++){
             channelAudio[i] = document.getElementById(data.channelNames[i])
-            channelContainer.append("<div class = 'channel' id = c"+ i +"><p>"+ data.channelNames[i] +"</p> <input type='range' min='0' max='100' value='80' class='slider' id='channel"+ i +"Slider'> <p id='channel"+ i +"Value'>80</p></div>");
+            channelContainer.append("<div class = 'channel' id = c"+ i +"><p>"+ data.channelNames[i] +"</p> <input type='range' min='0' max='100' value='80' class='vSlider' id='channel"+ i +"Slider'></div>");
 
             channel = $('.channel#c'+i);
             for(let j = 0; j < steps; j++){
@@ -33,6 +34,8 @@ $(function(){
                     $('.channel#c'+i+ " button#b"+j).css('background',buttonStates[i][j])
                 }
             }
+            channelAudio[i].volume = volValues[i] / 100;
+            $('#channel'+i+'Slider').val(volValues[i]);
         }
 
         $('.channel button').click(function(){
@@ -46,6 +49,12 @@ $(function(){
         delay = (60000/data.bpm) / 2;
         bpmValueDisplay.text(data.bpm);
         bpmSlider.val(data.bpm);
+
+        $('.vSlider').on('change', function(){
+            let volChannel = this.id;
+            let vol = this.value;
+            socket.emit('volume change', {volChannel: volChannel, vol: vol});
+        })
     })
 
     var playing = false;
@@ -162,5 +171,10 @@ $(function(){
         if (playing){
             playing = false;
         }
+    })
+
+    socket.on('volume change', function(data){
+        channelAudio[data.volChannel[7]].volume = data.vol/100;
+        $('#' + data.volChannel).val(data.vol);
     })
 })

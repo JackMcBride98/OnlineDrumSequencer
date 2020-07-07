@@ -12,6 +12,7 @@ var channels = 5;
 var buttonStates = Array(channels).fill().map(() => Array(steps).fill("") );
 var bpm = 100;
 var colours = [];
+var volValues = Array(channels).fill(80);
 
 io.on('connection', function(socket){
     console.log('a user connected');
@@ -38,7 +39,8 @@ io.on('connection', function(socket){
         channelNames: ["kick", "snare", "hat", "bongo", "george"],
         buttonStates: buttonStates,
         colour: socket.colour,
-        bpm: bpm 
+        bpm: bpm, 
+        volValues: volValues
     } 
 
     socket.emit('initialise', initObject);
@@ -80,6 +82,11 @@ io.on('connection', function(socket){
     socket.on('cursor', function(data){
         data.colour = socket.colour;
         socket.broadcast.emit('cursor', data);
+    })
+
+    socket.on('volume change', function(data){
+        volValues[data.volChannel[7]] = data.vol;
+        io.emit('volume change', data)
     })
 });
 
