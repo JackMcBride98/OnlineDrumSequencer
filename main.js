@@ -34,7 +34,7 @@ $(function(){
                     $('.channel#c'+i+ " button#b"+j).css('background',buttonStates[i][j])
                 }
             }
-            channelAudio[i].volume = volValues[i] / 100;
+            channelAudio[i].volume = Math.pow(volValues[i] / 100, 3);
             $('#channel'+i+'Slider').val(volValues[i]);
         }
 
@@ -174,7 +174,7 @@ $(function(){
     })
 
     socket.on('volume change', function(data){
-        channelAudio[data.volChannel[7]].volume = data.vol/100;
+        channelAudio[data.volChannel[7]].volume = Math.pow(data.vol/100, 3);
         $('#' + data.volChannel).val(data.vol);
     })
 })

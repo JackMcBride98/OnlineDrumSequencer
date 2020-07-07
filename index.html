@@ -9,36 +9,40 @@
         </style>
     </head>
     <body>
-        <h1>
-            Online Drum Sequencer
-        </h1>
-        <p>Make Drum Patterns Online</p>
-        <audio id="kick">
-            <source src="Kick.wav" type="audio/wav">    
-        </audio>
-        <audio id="snare">
-            <source src="snare.wav" type="audio/wav">    
-        </audio>
-        <audio id="hat">
-            <source src="hat.wav" type="audio/wav">    
-        </audio>
-        <audio id="bongo">
-            <source src="bongo.wav" type="audio/wav">    
-        </audio>
-        <audio id="george">
-            <source src="george.wav" type="audio/wav">    
-        </audio>
+        <header>
+            <h1>
+                Online Drum Sequencer
+            </h1>
+            <p>Make Drum Patterns Online</p>
+        </header>
+        <div class="drumMachine">
+            <audio id="kick">
+                <source src="Kick.wav" type="audio/wav">    
+            </audio>
+            <audio id="snare">
+                <source src="snare.wav" type="audio/wav">    
+            </audio>
+            <audio id="hat">
+                <source src="hat.wav" type="audio/wav">    
+            </audio>
+            <audio id="bongo">
+                <source src="bongo.wav" type="audio/wav">    
+            </audio>
+            <audio id="george">
+                <source src="george.wav" type="audio/wav">    
+            </audio>
 
-        <div class = "controls">
-            <button id="play">Play </button>
-            <button id="pause">Pause </button>
-            <button id="stop">Stop</button>
-            <input type="range" min="60" max="300" value="100" class="slider" id="bpmSlider">
-            <p id="bpmValue">100</p>
+            <div class = "controls">
+                <button id="play">Play </button>
+                <button id="pause">Pause </button>
+                <button id="stop">Stop</button>
+                <input type="range" min="60" max="300" value="100" class="slider" id="bpmSlider">
+                <p id="bpmValue">100</p>
+            </div>
+
+            <div class = "channel-container"></div>
         </div>
-
-        <div class = "channel-container"></div>
-
+        
         <div class = "cursor-container"></div>
     </body>
     <script src="/socket.io/socket.io.js"></script>
