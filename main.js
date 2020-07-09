@@ -27,6 +27,9 @@ $(function(){
             channel = $('.channel#c'+i);
             for(let j = 0; j < steps; j++){
                 channel.append("<button id = b"+ j +"> </button>")
+                if(j % 4 == 0){
+                    $('.channel#c'+i+ " button#b"+j).css('margin-left', '30px')
+                }
                 if(buttonStates[i][j] === ""){
                     $('.channel#c'+i+ " button#b"+j).css('background','white')
                 }
