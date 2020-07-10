@@ -1,6 +1,6 @@
 /* GLOBAL SETTINGS */
 body {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
     padding: 0px;
     margin: 0px;
 }
@@ -26,24 +26,44 @@ header p{
     padding: 10px, 0px;
 }
 
+/* NAV BAR */
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+nav ul li {
+    list-style: none;
+    color: black;
+    width: 20%;
+    text-align: center;
+}
+
+nav ul li a {
+    color: black;
+    text-decoration: none;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
 /* CSS FOR DRUM MACHINE */
 
 .drumMachine {
     position: relative;
-    display: table;
-    width: auto;
+    width: 90%;
     margin: auto;
     margin-top: 20px;
-    border: black solid 2px;
-    border-radius: 8px;
 }
 
-/* PLAY AND STOP BUTTONS */
+/* PLAY, STOP AND PAUSE BUTTONS */
 .controls {
     display: flex;
     justify-content: center;
-    
-    left: 87px;
+    margin-bottom: 30px;
 }
 
 .controls button {
@@ -64,6 +84,7 @@ header p{
 
 #play:hover {
     background-color: rgb(3, 209, 3, 40%);
+    cursor: pointer;
 }
 
 #play:after {
@@ -72,28 +93,37 @@ header p{
 
 #stop:hover {
     background-color: rgb(255, 0, 0, 40%);
+    cursor: pointer;
 }
 
 #stop:after {
     content: ' \25FE';
 }
 
+#pause:hover {
+    background-color: rgba(190, 124, 0, 0.4);
+    cursor: pointer;
+}
+
 #pause:after {
     transform: rotate(-90deg);
-    content: '=';
+    content: ' \23F8';
 }
 
 /* CSS FOR CHANNELS */
 
-.channel-container {
-    display: flex;
-    flex-direction: column;
-}
-
 .channel {
     padding-bottom: 10px ;
     display: flex;
-    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.channel .channel-ctrl {
+    padding: 0px 20px;
+}
+
+.channel .channel-ctrl p {
+    text-align: center;
 }
 
 .channel button {
@@ -113,17 +143,32 @@ header p{
     outline:0;
 }
 
-.channel p {
-    display: inline-block;
-    padding: 0px 20px;
-    width: 40px;
-}
-
 .cursor {
     position: absolute;
     background: black;
     width: 20px;
     height: 20px;
     border-radius: 10px;
-  }
+}
 
+/* ABOUT */
+/* DESCRIPTIONS */
+
+.about {
+    display: flex;
+    width: 80%;
+    margin: auto;
+    margin-bottom: 40px;
+}
+
+.about img {
+    width: 30%;
+    height: 30%;
+    object-fit: cover;
+    border-radius: 50%;
+    margin: 20px;
+}
+
+.about h1 {
+
+}

@@ -22,13 +22,13 @@ $(function(){
         volValues = data.volValues;
         for(let i = 0; i < channels; i++){
             channelAudio[i] = document.getElementById(data.channelNames[i])
-            channelContainer.append("<div class = 'channel' id = c"+ i +"><p>"+ data.channelNames[i] +"</p> <input type='range' min='0' max='100' value='80' class='vSlider' id='channel"+ i +"Slider'></div>");
+            channelContainer.append("<div class = 'channel' id = c"+ i +"><div class = 'channel-ctrl'><p>"+ data.channelNames[i] +"</p> <input type='range' min='0' max='100' value='80' class='vSlider' id='channel"+ i +"Slider'></div></div>");
 
             channel = $('.channel#c'+i);
             for(let j = 0; j < steps; j++){
                 channel.append("<button id = b"+ j +"> </button>")
-                if(j % 4 == 0){
-                    $('.channel#c'+i+ " button#b"+j).css('margin-left', '30px')
+                if(j % 4 == 0 && j != 0){
+                    $('.channel#c'+i+ " button#b"+j).css('margin-left', '25px')
                 }
                 if(buttonStates[i][j] === ""){
                     $('.channel#c'+i+ " button#b"+j).css('background','white')

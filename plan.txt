@@ -7,7 +7,7 @@ Online Drum Sequencer:
 
 Features to Add:
 1. Give users selection of samples
-2. Add playhead (Alter opaqueness on buttons)
+2. Add playhead (Alter opaqueness on buttons?)
 
 5. Stylise
 6. Add and remove samples from library
