@@ -40,6 +40,12 @@
             <audio id="george">
                 <source src="george.wav" type="audio/wav">    
             </audio>
+            <audio id="clap">
+                <source src="clap.wav" type="audio/wav">    
+            </audio>
+            <audio id="kick2">
+                <source src="kick2.wav" type="audio/wav">    
+            </audio>
 
             <div class = "controls">
                 <button id="play">Play </button>
@@ -47,6 +53,11 @@
                 <button id="stop">Stop</button>
                 <input type="range" min="60" max="300" value="100" class="slider" id="bpmSlider">
                 <p id="bpmValue">100</p>
+                <select id="newSampleSelect">
+                    <option value = "clap">clap</option>
+                    <option value = "kick2">kick2</option>
+                </select>
+                <button id = "addSampleButton">Add Sample</button>
             </div>
 
             <div class = "channel-container"></div>

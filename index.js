@@ -12,7 +12,9 @@ var channels = 5;
 var buttonStates = Array(channels).fill().map(() => Array(steps).fill("") );
 var bpm = 100;
 var colours = [];
+var channelNames = ["kick", "snare", "hat", "bongo", "george"];
 var volValues = Array(channels).fill(80);
+var channelStates = Array(channels).fill(true);
 
 io.on('connection', function(socket){
     console.log('a user connected');
@@ -36,11 +38,12 @@ io.on('connection', function(socket){
     var initObject = {
         channels: channels,
         steps: steps,
-        channelNames: ["kick", "snare", "hat", "bongo", "george"],
+        channelNames: channelNames,
         buttonStates: buttonStates,
         colour: socket.colour,
         bpm: bpm, 
-        volValues: volValues
+        volValues: volValues,
+        channelStates: channelStates
     } 
 
     socket.emit('initialise', initObject);
@@ -87,6 +90,26 @@ io.on('connection', function(socket){
     socket.on('volume change', function(data){
         volValues[data.volChannel[7]] = data.vol;
         io.emit('volume change', data)
+    })
+
+    socket.on('add sample', function(data){
+        if (!channelNames.includes(data)){
+            channels++;
+            channelNames.push(data)
+            volValues.push(80)
+            buttonStates.push(Array(steps).fill(""))
+            channelStates.push(true)
+            io.emit('add new sample', data);
+        }
+        else{
+            channelStates[channelNames.indexOf(data)] = true;
+            io.emit('add sample', data)
+        }
+    })
+
+    socket.on('remove sample',function(data){
+        channelStates[data] = false;
+        io.emit('remove sample', data)
     })
 });
 
