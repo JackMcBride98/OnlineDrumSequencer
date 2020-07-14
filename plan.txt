@@ -11,7 +11,6 @@ Features to Add:
 
 5. Stylise
 6. Add and remove samples from library
-7. Volume control of samples
 8. Swing control
 9. About / Credits page
 10. Add option the change beat amount

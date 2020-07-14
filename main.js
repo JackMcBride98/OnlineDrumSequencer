@@ -60,6 +60,19 @@ $(function(){
         addSample(i);
     })
 
+    socket.on('add uploaded sample', function(data){
+        channels++;
+        channelNames.push(data.channelName)
+        volValues.push(80)
+        buttonStates.push(Array(steps).fill(""))
+        channelStates.push(true)
+
+        channelAudio.push(new Audio("/uploads/"+data.fileName))
+        i = channels-1;
+        channelAudio[i].volume = Math.pow(volValues[i] / 100, 3);
+        addSample(i);
+    })
+
     socket.on('remove sample', function(data){
         channelStates[data] = false;
         $('.channel#c'+data).remove()
@@ -71,15 +84,15 @@ $(function(){
         channelContainer.append("<div class = 'channel' id = c"+ i +"><div class = 'channel-ctrl'><p>"+ channelNames[i] +"</p> <input type='range' min='0' max='100' value='80' class='vSlider' id='channel"+ i +"Slider'><button class='remove'>X</button></div></div>");
         channel = $('.channel#c'+i);
         for(let j = 0; j < steps; j++){
-            channel.append("<button id = b"+ j +"> </button>")
+            channel.append("<button id ='c"+i+"b"+j+"'> </button>")
             if(j % 4 == 0 && j != 0){
-                $('.channel#c'+i+ " button#b"+j).css('margin-left', '25px')
+                $('.channel#c'+i+ " button#c"+i+"b"+j).css('margin-left', '25px')
             }
             if(buttonStates[i][j] === ""){
-                $('.channel#c'+i+ " button#b"+j).css('background','white')
+                $('.channel#c'+i+ " button#c"+i+"b"+j).css('background','white')
             }
             else{
-                $('.channel#c'+i+ " button#b"+j).css('background',buttonStates[i][j])
+                $('.channel#c'+i+ " button#c"+i+"b"+j).css('background',buttonStates[i][j])
             }
         }
         $('#channel'+i+'Slider').val(volValues[i]);
@@ -108,7 +121,34 @@ $(function(){
         })
     }
 
+    var uploader = new SocketIOFileUpload(socket);
+    var uploadSampleName = $('#sampleUploadName');
+    var sampleUploadButton = $('#sampleUploadButton')
+    var sampleUploadInput = $('#sampleUpload')
 
+
+    sampleUploadButton.click(function(){
+        console.log('uploading sample')
+        name = uploadSampleName.val();
+        if (name === ""){
+            alert("upload failed! Name not valid")
+        }
+        else{
+            file = sampleUploadInput.prop('files')[0];
+            uploader.submitFiles([file])
+        }
+    })
+
+    uploader.maxFileSize = 3242880;
+    uploader.addEventListener("error", function(data){
+        if (data.code === 1) {
+            alert("Don't upload such a big file");
+        }
+    });
+
+    uploader.addEventListener("start", function(event){
+            event.file.meta.channelName = uploadSampleName.val();
+    })
 
     var playing = false;
     var timestep = 0;
@@ -197,7 +237,6 @@ $(function(){
     socket.on('cursor',function(data){
         //change cursor object location to data.x and data.y
         id = data.colour.replace(/[(),]+/g, "")
-        console.log(id + " " + data.x + ", " + data.y)
         cursor = $('#cur'+id);
         cursor.css('left', data.x)
         cursor.css('top', data.y)
@@ -217,11 +256,11 @@ $(function(){
     
     socket.on('button click', function(data){
         if (data.state){
-            $('.channel#c'+data.row+ " button#b"+data.column).css('background',data.colour)
+            $('.channel#c'+data.row+ " button#c"+data.row+"b"+data.column).css('background',data.colour)
             buttonStates[data.row][data.column] = data.colour;
         }
         else{
-            $('.channel#c'+data.row+ " button#b"+data.column).css('background','white')
+            $('.channel#c'+data.row+ " button#c"+data.row+"b"+data.column).css('background','white')
             buttonStates[data.row][data.column] = "";
         }
     })

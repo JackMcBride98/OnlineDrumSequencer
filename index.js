@@ -3,9 +3,12 @@ var express = require('express');
 var app = express();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
+var siofu = require("socketio-file-upload");
 const path = require('path');
 
 app.use(express.static(__dirname));
+app.use(siofu.router)
+
 
 var steps = 16;
 var channels = 5;
@@ -17,6 +20,20 @@ var volValues = Array(channels).fill(80);
 var channelStates = Array(channels).fill(true);
 
 io.on('connection', function(socket){
+    var uploader = new siofu();
+    uploader.dir = (__dirname + "/uploads");
+    uploader.listen(socket);
+    uploader.on("saved", function(event){
+        if (!channelNames.includes(event.file.meta.channelName)){
+            channels++;
+            channelNames.push(event.file.meta.channelName)
+            volValues.push(80)
+            buttonStates.push(Array(steps).fill(""))
+            channelStates.push(true)
+            io.emit('add uploaded sample', {fileName: event.file.name, channelName: event.file.meta.channelName});
+        }
+    })
+
     console.log('a user connected');
     colours.forEach(function(colour){
         socket.emit('add cursor',colour)

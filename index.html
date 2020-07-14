@@ -58,6 +58,9 @@
                     <option value = "kick2">kick2</option>
                 </select>
                 <button id = "addSampleButton">Add Sample</button>
+                <input type="file" id="sampleUpload" accept="audio/*">
+                <input type="text" id="sampleUploadName">
+                <button id ="sampleUploadButton">Upload Sample</button>
             </div>
 
             <div class = "channel-container"></div>
@@ -67,5 +70,6 @@
     </body>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="/siofu/client.js"></script>
     <script src="/main.js"></script>
 </html>
