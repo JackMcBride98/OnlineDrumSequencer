@@ -5,24 +5,44 @@ var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 var siofu = require("socketio-file-upload");
 const path = require('path');
+const fs = require('fs');
 
 app.use(express.static(__dirname));
 app.use(siofu.router)
 
 
 var steps = 16;
-var channels = 5;
+var channels = 7;
 var buttonStates = Array(channels).fill().map(() => Array(steps).fill("") );
 var bpm = 100;
 var colours = [];
-var channelNames = ["kick", "snare", "hat", "bongo", "george"];
+var channelNames = ["kick", "snare", "hat", "bongo", "george","kick2","clap"];
+var fileNames = ["kick.wav","snare.wav","hat.wav","bongo.wav","george.wav","kick2.wav","clap.wav"]
 var volValues = Array(channels).fill(80);
 var channelStates = Array(channels).fill(true);
+channelStates[5] = false;
+channelStates[6] = false;
+
 
 io.on('connection', function(socket){
     var uploader = new siofu();
-    uploader.dir = (__dirname + "/uploads");
+    uploader.dir = (__dirname + "/samples");
     uploader.listen(socket);
+    uploader.on("complete", function(event){
+        console.log(event.file.name)
+        try{
+            if (fs.existsSync(__dirname + "/samples/" + event.file.name)){
+                console.log("file exists already")
+            }
+            else{
+                console.log("file does not exist")
+            }
+        }
+        catch (err){
+            console.error(err);
+        }
+
+    })
     uploader.on("saved", function(event){
         if (!channelNames.includes(event.file.meta.channelName)){
             channels++;
@@ -60,7 +80,8 @@ io.on('connection', function(socket){
         colour: socket.colour,
         bpm: bpm, 
         volValues: volValues,
-        channelStates: channelStates
+        channelStates: channelStates,
+        fileNames: fileNames
     } 
 
     socket.emit('initialise', initObject);
@@ -127,6 +148,11 @@ io.on('connection', function(socket){
     socket.on('remove sample',function(data){
         channelStates[data] = false;
         io.emit('remove sample', data)
+    })
+
+    socket.on('clear',function(data){
+        buttonStates[data].fill("");
+        io.emit('clear',data);
     })
 });
 

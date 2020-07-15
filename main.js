@@ -25,10 +25,13 @@ $(function(){
         channelStates = data.channelStates;
         bpm = data.bpm;
         for(let i = 0; i < channels; i++){
-            channelAudio[i] = document.getElementById(data.channelNames[i])
+            channelAudio[i] = new Audio("/samples/"+data.fileNames[i])
             channelAudio[i].volume = Math.pow(volValues[i] / 100, 3);
             if(channelStates[i]){
                 addSample(i)
+            }
+            else{
+                newSampleSelect.append("<option value='"+channelNames[i]+"'>"+channelNames[i]+"</option>")
             }
         }
     })
@@ -43,7 +46,7 @@ $(function(){
     socket.on('add sample', function(data){
         i = channelNames.indexOf(data);
         channelStates[i] = true;
-        $('[value='+data+']').remove()
+        $("[value='"+data+"']").remove()
         addSample(i);
     })
 
@@ -53,7 +56,7 @@ $(function(){
         volValues.push(80)
         buttonStates.push(Array(steps).fill(""))
         channelStates.push(true)
-        channelAudio.push(document.getElementById(data))
+        channelAudio.push(new Audio("/samples/"+data))
         i = channels-1;
         channelAudio[i].volume = Math.pow(volValues[i] / 100, 3);
         $('[value='+data+']').remove()
@@ -67,7 +70,7 @@ $(function(){
         buttonStates.push(Array(steps).fill(""))
         channelStates.push(true)
 
-        channelAudio.push(new Audio("/uploads/"+data.fileName))
+        channelAudio.push(new Audio("/samples/"+data.fileName))
         i = channels-1;
         channelAudio[i].volume = Math.pow(volValues[i] / 100, 3);
         addSample(i);
@@ -75,13 +78,14 @@ $(function(){
 
     socket.on('remove sample', function(data){
         channelStates[data] = false;
+        channelAudio[data].pause();
         $('.channel#c'+data).remove()
         name = channelNames[data];
         newSampleSelect.append("<option value='"+name+"'>"+name+"</option>")
     })
 
     function addSample(i){
-        channelContainer.append("<div class = 'channel' id = c"+ i +"><div class = 'channel-ctrl'><p>"+ channelNames[i] +"</p> <input type='range' min='0' max='100' value='80' class='vSlider' id='channel"+ i +"Slider'><button class='remove'>X</button></div></div>");
+        channelContainer.append("<div class = 'channel' id = c"+ i +"><div class = 'channel-ctrl'><p>"+ channelNames[i] +"</p> <input type='range' min='0' max='100' value='80' class='vSlider' id='channel"+ i +"Slider'><button class='remove'>X</button><button class='clear'>clear</button></div></div>");
         channel = $('.channel#c'+i);
         for(let j = 0; j < steps; j++){
             channel.append("<button id ='c"+i+"b"+j+"'> </button>")
@@ -109,7 +113,10 @@ $(function(){
         bpmValueDisplay.text(bpm);
         bpmSlider.val(bpm);
 
-        $('#c'+i+' div .vSlider').on('change', function(){
+        var volumeSlider = $('#c'+i+' div .vSlider');
+        volumeSlider.val = volValues[i]
+
+        volumeSlider.on('change', function(){
             let volChannel = this.id;
             let vol = this.value;
             socket.emit('volume change', {volChannel: volChannel, vol: vol});
@@ -119,6 +126,11 @@ $(function(){
             var channelID = $(this).parent().parent().attr("id").split('c')[1];
             socket.emit('remove sample', channelID);
         })
+
+        $('#c'+i+' div .clear').click(function(){
+            var channelID = $(this).parent().parent().attr("id").split('c')[1];
+            socket.emit('clear', channelID);
+        })
     }
 
     var uploader = new SocketIOFileUpload(socket);
@@ -126,12 +138,21 @@ $(function(){
     var sampleUploadButton = $('#sampleUploadButton')
     var sampleUploadInput = $('#sampleUpload')
 
-
     sampleUploadButton.click(function(){
         console.log('uploading sample')
+        sampleUploadInput.text();
         name = uploadSampleName.val();
         if (name === ""){
             alert("upload failed! Name not valid")
+        }
+        else if(name.length > 15){
+            alert("upload failed! Name can not be longer than 15 characters");
+        }
+        else if(channelNames.includes(name)){
+            alert("upload failed! Name already exists!")
+        }
+        else if ( !sampleUploadInput.val()){
+            alert("upload failed! No File selected")
         }
         else{
             file = sampleUploadInput.prop('files')[0];
@@ -185,6 +206,7 @@ $(function(){
             playing = false;
             socket.emit('stop');
             timestep = 0;
+            channelAudio.forEach(function(audio){audio.pause()})
         }
     })
 
@@ -231,15 +253,15 @@ $(function(){
     var cursorContainer = $('.cursor-container');
 
     function handleMouseMove(event){
-        socket.emit('cursor', {x:event.pageX, y:event.pageY});
+        socket.emit('cursor', {x:event.pageX/window.innerWidth, y:event.pageY/window.innerHeight});
     }
 
     socket.on('cursor',function(data){
         //change cursor object location to data.x and data.y
         id = data.colour.replace(/[(),]+/g, "")
         cursor = $('#cur'+id);
-        cursor.css('left', data.x)
-        cursor.css('top', data.y)
+        cursor.css('left', data.x*window.innerWidth)
+        cursor.css('top', data.y*window.innerHeight)
     })
 
     socket.on('add cursor', function(data){
@@ -268,5 +290,10 @@ $(function(){
     socket.on('volume change', function(data){
         channelAudio[data.volChannel[7]].volume = Math.pow(data.vol/100, 3);
         $('#' + data.volChannel).val(data.vol);
+    })
+
+    socket.on('clear',function(data){
+        buttonStates[data].fill("");
+        $('.channel#c'+data+ " > button").css('background','white');
     })
 })
