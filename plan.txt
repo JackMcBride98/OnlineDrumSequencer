@@ -6,14 +6,10 @@ Online Drum Sequencer:
 - 
 
 Features to Add:
-1. Give users selection of samples
 2. Add playhead (Alter opaqueness on buttons?)
 
 5. Stylise
-6. Add and remove samples from library
-7. Volume control of samples
 8. Swing control
-9. About / Credits page
 10. Add option the change beat amount
 
 Completed Featurs:
