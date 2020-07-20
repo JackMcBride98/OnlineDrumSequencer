@@ -15,6 +15,7 @@ var steps = 16;
 var channels = 7;
 var buttonStates = Array(channels).fill().map(() => Array(steps).fill("") );
 var bpm = 100;
+var swing = 0;
 var colours = [];
 var channelNames = ["kick", "snare", "hat", "bongo", "george","kick2","clap"];
 var fileNames = ["kick.wav","snare.wav","hat.wav","bongo.wav","george.wav","kick2.wav","clap.wav"]
@@ -78,7 +79,8 @@ io.on('connection', function(socket){
         channelNames: channelNames,
         buttonStates: buttonStates,
         colour: socket.colour,
-        bpm: bpm, 
+        bpm: bpm,
+        swing: swing, 
         volValues: volValues,
         channelStates: channelStates,
         fileNames: fileNames
@@ -118,6 +120,11 @@ io.on('connection', function(socket){
     socket.on('bpm',function(data){
         bpm = data;
         io.emit('bpm', data);
+    })
+
+    socket.on('swing', function(data){
+        swing = data;
+        io.emit('swing', data)
     })
 
     socket.on('cursor', function(data){
