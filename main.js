@@ -196,7 +196,11 @@ $(function(){
 
             }
             $('.channel > button#c'+ i +'b'+step).css('opacity',0.5)
-            $('.channel > button#c'+ i +'b'+(step-1)).css('opacity',1)
+            let stepBefore = step-1;
+            if (stepBefore < 0){
+                stepBefore = steps-1;
+            }
+            $('.channel > button#c'+ i +'b'+stepBefore).css('opacity',1)
         }
 
 
