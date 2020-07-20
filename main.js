@@ -193,8 +193,12 @@ $(function(){
                 channelAudio[i].pause()
                 channelAudio[i].currentTime = 0;
                 channelAudio[i].play()
+
             }
+            $('.channel > button#c'+ i +'b'+step).css('opacity',0.5)
+            $('.channel > button#c'+ i +'b'+(step-1)).css('opacity',1)
         }
+
 
         timestep++;
         if(timestep > steps-1){
@@ -219,6 +223,7 @@ $(function(){
             timestep = 0;
             channelAudio.forEach(function(audio){audio.pause()})
         }
+        $('.channel > button').css('opacity',1)
     })
 
     pauseButton.click(function(){
