@@ -9,9 +9,9 @@ Features to Add:
 2. Add playhead (Alter opaqueness on buttons?)
 
 5. Stylise
-8. Swing control
 10. Add option the change beat amount
 
 Completed Featurs:
 3. Add custom BPM *DONE*
 4. Pause feature (Maybe) *DONE*
+8. Swing control
