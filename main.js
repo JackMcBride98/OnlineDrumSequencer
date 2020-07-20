@@ -6,6 +6,7 @@ $(function(){
     var pauseButton = $('#pause');
 
     var bpm;
+    var swing;
     var steps = 4;
     var channels = 3;
     var buttonStates = Array(channels).fill().map(() => Array(steps).fill("") );
@@ -24,6 +25,12 @@ $(function(){
         volValues = data.volValues;
         channelStates = data.channelStates;
         bpm = data.bpm;
+        delay = (60000/bpm) / 2;
+        bpmValueDisplay.text(bpm);
+        bpmSlider.val(bpm);
+        swing = data.swing;
+        swingSlider.val(swing);
+        swingValueDisplay.text(swing);
         for(let i = 0; i < channels; i++){
             channelAudio[i] = new Audio("/samples/"+data.fileNames[i])
             channelAudio[i].volume = Math.pow(volValues[i] / 100, 3);
@@ -109,10 +116,6 @@ $(function(){
             socket.emit('button click', {row: row, column: column})
         })
 
-        delay = (60000/bpm) / 2;
-        bpmValueDisplay.text(bpm);
-        bpmSlider.val(bpm);
-
         var volumeSlider = $('#c'+i+' div .vSlider');
         volumeSlider.val = volValues[i]
 
@@ -174,6 +177,7 @@ $(function(){
     var playing = false;
     var timestep = 0;
     var delay = 250;
+    var maxSwing = 100;
 
     playButton.click(function(){
         if (!playing){
@@ -189,16 +193,27 @@ $(function(){
                 channelAudio[i].pause()
                 channelAudio[i].currentTime = 0;
                 channelAudio[i].play()
+
             }
+            $('.channel > button#c'+ i +'b'+step).css('opacity',0.5)
+            $('.channel > button#c'+ i +'b'+(step-1)).css('opacity',1)
         }
+
 
         timestep++;
         if(timestep > steps-1){
             timestep = 0;
         }
+        let actualDelay;
+        if (timestep % 2 === 0){
+            actualDelay = delay+ (swing/100 * maxSwing);
+        }
+        else{
+            actualDelay = delay - (swing/100 * maxSwing);
+        }
         setTimeout(function(){
             if(playing){play(timestep)}
-        }, delay)
+        }, actualDelay)
     }
 
     stopButton.click(function(){
@@ -208,6 +223,7 @@ $(function(){
             timestep = 0;
             channelAudio.forEach(function(audio){audio.pause()})
         }
+        $('.channel > button').css('opacity',1)
     })
 
     pauseButton.click(function(){
@@ -247,6 +263,20 @@ $(function(){
         delay = (60000/data) / 2;
         bpmValueDisplay.text(data);
         bpmSlider.val(data);
+    })
+
+    var swingSlider = $('#swingSlider');
+    var swingValueDisplay = $('#swingValue');
+
+    swingSlider.on('change',function(){
+        swing = this.value;
+        socket.emit('swing', swing);
+    })
+
+    socket.on('swing', function(data){
+        swing = data;
+        swingValueDisplay.text(data);
+        swingSlider.val(data);
     })
 
     document.onmousemove = handleMouseMove;
