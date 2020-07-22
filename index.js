@@ -83,7 +83,8 @@ io.on('connection', function(socket){
         swing: swing, 
         volValues: volValues,
         channelStates: channelStates,
-        fileNames: fileNames
+        fileNames: fileNames,
+        userCount: colours.length
     } 
 
     socket.emit('initialise', initObject);

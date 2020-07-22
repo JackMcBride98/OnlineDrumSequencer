@@ -16,6 +16,8 @@ $(function(){
     var channelContainer = $('.channel-container');
     channelContainer.html("");
 
+    var userCountLabel = $('#userCount')
+
     socket.on('initialise',function(data){
         steps = data.steps;
         channels = data.channels;
@@ -31,6 +33,7 @@ $(function(){
         swing = data.swing;
         swingSlider.val(swing);
         swingValueDisplay.text(swing);
+        userCountLabel.text(data.userCount)
         for(let i = 0; i < channels; i++){
             channelAudio[i] = new Audio("/samples/"+data.fileNames[i])
             channelAudio[i].volume = Math.pow(volValues[i] / 100, 3);
@@ -303,11 +306,15 @@ $(function(){
         console.log('cursor added with id ' + id)
         cursorContainer.append("<div class = 'cursor' id =cur"+ id +"></div>")
         $('#cur'+id).css('background',data)
+        let userCount = userCountLabel.text();
+        userCountLabel.text(parseInt(userCount)+1)
     })
 
     socket.on('remove cursor', function(data){
         id = data.replace(/[(),]+/g, "");
         $('#cur'+id).remove()
+        let userCount = userCountLabel.text();
+        userCountLabel.text(parseInt(userCount)-1)
     })
     
     socket.on('button click', function(data){
