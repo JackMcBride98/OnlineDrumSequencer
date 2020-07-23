@@ -102,7 +102,7 @@ io.on('connection', function(socket){
         else{
             buttonStates[data.row][data.column] = "";
         }
-        console.log("button row:" + data.row + " column:" + data.column + " is in state " + buttonStates[data.row][data.column])
+        // console.log("button row:" + data.row + " column:" + data.column + " is in state " + buttonStates[data.row][data.column])
         io.emit('button click', {row:data.row, column:data.column, state:buttonStates[data.row][data.column], colour:socket.colour})
     })
 
