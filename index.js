@@ -48,6 +48,7 @@ io.on('connection', function(socket){
         if (!channelNames.includes(event.file.meta.channelName)){
             channels++;
             channelNames.push(event.file.meta.channelName)
+            fileNames.push(event.file.name)
             volValues.push(80)
             buttonStates.push(Array(steps).fill(""))
             channelStates.push(true)
