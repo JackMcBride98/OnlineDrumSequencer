@@ -164,8 +164,10 @@ io.on('connection', function(socket){
     })
 });
 
-http.listen(3000, () => {
-    console.log('listening on *:3000');
+let port = process.env.PORT || 80;
+
+http.listen(port, () => {
+    console.log('listening on *:'+port);
 })
 
 function getRandomColour(){
