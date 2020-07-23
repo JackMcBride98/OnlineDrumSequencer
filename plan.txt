@@ -3,7 +3,7 @@ Online Drum Sequencer:
 - Channels of 16 buttons. Each channel represents a different instrument
 - Each channel is represented by an array of 16 values ranging from 0-1 to represent off or on
 - Variable to represent playhead. While (playing) loop with for loop inside that iterates over channel arrays and checks if value at index is off or on.
-- 
+- some change lol
 
 Features to Add:
 
