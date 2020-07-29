@@ -1,113 +1,28 @@
 /* GLOBAL SETTINGS */
 body {
-    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
     padding: 0px;
     margin: 0px;
 }
 
 /* HEADER */
-header {
-    background: radial-gradient(circle, rgba(96,210,255,1) 0%, rgba(255,255,255,1) 100%);
-    position: relative;
-    top: 0px;
-    width: 100%;
-    border-bottom: black double 4px;
-}
-
-header h1 {
-    position: relative;
-    text-align: center;
-    margin: 0px;
-}
-
-header p{
-    position: relative;
-    text-align: center;
-    padding: 10px, 0px;
-}
-
-/* NAV BAR */
-
-nav ul {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
-}
-
-nav ul li {
-    list-style: none;
-    color: black;
-    width: 20%;
-    text-align: center;
-}
-
-nav ul li a {
-    color: black;
-    text-decoration: none;
-}
-
-nav ul li a:hover {
-    text-decoration: underline;
-}
 
 /* CSS FOR DRUM MACHINE */
 
 .drumMachine {
     position: relative;
-    width: 90%;
+    width: 1200px;
     margin: auto;
     margin-top: 20px;
 }
 
-/* PLAY, STOP AND PAUSE BUTTONS */
-.controls {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 30px;
+/* CONTROLS */
+
+h6 {
+    padding: 0px !important;
 }
 
-.controls button {
-    background: white;
-    border: black solid 2px;
-    border-radius: 8px;
-    width: 50px;
-    height: 40px;
-    margin: 0px 5px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    text-align: center;
-}
-
-.controls button:focus { 
-    outline:0;
-}
-
-#play:hover {
-    background-color: rgb(3, 209, 3, 40%);
-    cursor: pointer;
-}
-
-#play:after {
-    content: ' \25B6';
-}
-
-#stop:hover {
-    background-color: rgb(255, 0, 0, 40%);
-    cursor: pointer;
-}
-
-#stop:after {
-    content: ' \25FE';
-}
-
-#pause:hover {
-    background-color: rgba(190, 124, 0, 0.4);
-    cursor: pointer;
-}
-
-#pause:after {
-    transform: rotate(-90deg);
-    content: ' \23F8';
+.slider {
+    height: 0px !important;
 }
 
 /* CSS FOR CHANNELS */

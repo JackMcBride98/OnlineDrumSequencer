@@ -41,7 +41,8 @@ $(function(){
                 addSample(i)
             }
             else{
-                newSampleSelect.append("<option value='"+channelNames[i]+"'>"+channelNames[i]+"</option>")
+                // newSampleSelect.append("<option value='"+channelNames[i]+"'>"+channelNames[i]+"</option>")
+                newSampleSelect.append("<li><a href='#' value='"+channelNames[i]+"'>"+channelNames[i]+"</a></li>")
             }
         }
     })

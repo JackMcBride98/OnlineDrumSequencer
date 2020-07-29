@@ -4,46 +4,74 @@
         <meta charset="utf-8">
         <title>Online Drum Sequencer</title>
         <link rel='stylesheet' href='styles.css'>
-        <style>
-            
-        </style>
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
     <body>
         
         <header>
-            <h1>
-                Online Drum Sequencer
-            </h1>
-            <p>Make Drum Patterns Online</p>
+            <nav class="nav-wrapper blue z-depth-0">
+                <div class="container">
+                    <a href="" class="brand-logo grey-text text-lighten-3">Online Drum Sequencer</a>
+                    <ul class="right">
+                        <li class="active"><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                    </ul>
+                </div>
+            </nav>
         </header>
 
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-            </ul>
-        </nav>
+        
 
         <div class="drumMachine">
-            <div class = "controls">
-                <button id="play">Play </button>
-                <button id="pause">Pause </button>
-                <button id="stop">Stop</button>
-                <p>bpm</p>
-
-                <input type="range" min="10" max="400" value="100" class="slider" id="bpmSlider">
-                <p id="bpmValue">100</p>
-                <p>swing</p>
-                <input type="range" min="0" max="100" value="0" class="slider" id="swingSlider">
-                <p id="swingValue">0</p>
-                <select id="newSampleSelect">
-                </select>
-                <button id = "addSampleButton">Add Sample</button>
-                <input type="file" id="sampleUpload" accept="audio/*">
-                <input type="text" id="sampleUploadName">
-                <button id ="sampleUploadButton">Upload Sample</button>
-                <p>Users Online: </p>
-                <p id="userCount">0</p>
+            
+            <div class="row">
+                <div class="col l2">
+                    <div id="play" class="btn grey">
+                        <i class="material-icons">play_arrow</i>
+                    </div>
+                    <div id="pause" class="btn grey">
+                        <i class="material-icons">pause</i>
+                    </div>
+                    <div id="stop" class="btn grey">
+                        <i class="material-icons">stop</i>
+                    </div>
+                </div>
+                <div class="col l2">
+                    <p class="range-field">
+                        <h6>BPM</h6>
+                        <input type="range" min="10" max="400" value="100" class="slider" id="bpmSlider">
+                    </p>
+                </div>
+                <div class="col l2">
+                    <p class="range-field">
+                        <h6>Swing</h6>
+                        <input type="range" min="0" max="100" value="0" class="slider" id="swingSlider">
+                    </p>
+                </div>
+                <div class="col l1">
+                    <a class="dropdown-trigger btn" href="#"  data-target="newSampleSelect">Samples</a>
+                    <ul id="newSampleSelect" class="dropdown-content">
+                        <li><a href="#!">one</a></li>
+                    </ul>
+                </div>
+                <div class="col l1">
+                    <button id = "addSampleButton">Add Sample</button>
+                </div>
+                <div class="col l1">
+                    <input type="file" id="sampleUpload" accept="audio/*">
+                </div>
+                <div class="col l1">
+                    <input type="text" id="sampleUploadName">
+                </div>
+                <div class="col l1">
+                    <button id ="sampleUploadButton">Upload Sample</button>
+                </div>
+                <div class="col l1">
+                    <p>Users Online: </p>
+                    <p id="userCount">0</p>
+                </div>
             </div>
 
             <div class = "channel-container"></div>
@@ -51,8 +79,15 @@
         
         <div class = "cursor-container"></div>
     </body>
+    
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="/siofu/client.js"></script>
     <script src="/main.js"></script>
+    <script>
+        $('.dropdown-trigger').dropdown();
+    </script>
 </html>
