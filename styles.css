@@ -1,60 +1,54 @@
 /* GLOBAL SETTINGS */
 body {
-    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    font-family: 'Roboto', sans-serif;
     padding: 0px;
     margin: 0px;
 }
 
 /* HEADER */
 header {
-    background: radial-gradient(circle, rgba(96,210,255,1) 0%, rgba(255,255,255,1) 100%);
+    background: rgb(122, 183, 252, 40%);
     position: relative;
     top: 0px;
     width: 100%;
-    border-bottom: black double 4px;
 }
-
 header h1 {
     position: relative;
     text-align: center;
-    margin: 0px;
+    margin: 0px 0px 20px 0px;
 }
-
 header p{
     position: relative;
     text-align: center;
-    padding: 10px, 0px;
+    padding: 0px, 0px;
+    margin: 0px;
 }
 
 /* NAV BAR */
-
 nav ul {
     display: flex;
     justify-content: center;
-    margin-top: 10px;
+    margin-top: 2px;
+    padding: 0px;
 }
-
 nav ul li {
     list-style: none;
     color: black;
     width: 20%;
     text-align: center;
 }
-
 nav ul li a {
     color: black;
     text-decoration: none;
 }
-
 nav ul li a:hover {
     text-decoration: underline;
 }
 
 /* CSS FOR DRUM MACHINE */
-
 .drumMachine {
     position: relative;
-    width: 90%;
+    width: 1600px;
     margin: auto;
     margin-top: 20px;
 }
@@ -63,11 +57,10 @@ nav ul li a:hover {
 .controls {
     display: flex;
     justify-content: center;
-    margin-bottom: 30px;
+    margin-bottom: 50px;
 }
-
 .controls button {
-    background: white;
+    background-color: white;
     border: black solid 2px;
     border-radius: 8px;
     width: 50px;
@@ -77,62 +70,183 @@ nav ul li a:hover {
     margin-bottom: 10px;
     text-align: center;
 }
-
 .controls button:focus { 
     outline:0;
 }
-
 #play:hover {
     background-color: rgb(3, 209, 3, 40%);
     cursor: pointer;
 }
-
-#play:after {
-    content: ' \25B6';
-}
-
 #stop:hover {
     background-color: rgb(255, 0, 0, 40%);
     cursor: pointer;
 }
-
-#stop:after {
-    content: ' \25FE';
-}
-
 #pause:hover {
     background-color: rgba(190, 124, 0, 0.4);
     cursor: pointer;
 }
 
-#pause:after {
-    transform: rotate(-90deg);
-    content: ' \23F8';
+/* BPM AND SWING SLIDER */
+.bpmSliderContainer { 
+    padding: 20px 0px 20px 20px;
+    width: 230px;
+}
+.swingSliderContainer {
+    padding: 20px 0px 20px 20px;
+    width: 230px;
+}
+input.slider {
+    margin: 0px 2px;
+    position: relative;
+    top: 0px;
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    width: 60%; /* Full-width */
+    height: 10px; /* Specified height */
+    background: #a3a3a3; /* Grey background */
+    outline: none; /* Remove outline */
+    opacity: 0.7;
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+}
+input.slider:hover {
+    opacity: 1;
+}
+input.slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 20px; /* Set a specific slider handle width */
+    height: 20px; /* Slider handle height */
+    border-radius: 12px;
+    background: rgb(122, 183, 252); /* Green background */
+    cursor: pointer; /* Cursor on hover */
+} 
+input.slider::-moz-range-thumb {
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: rgb(122, 183, 252, 40%); /* Green background */
+    cursor: pointer; /* Cursor on hover */
+}
+
+/* NEW SAMPLE SELECT */
+.newSampleSelectContainer {
+    position: relative;
+    display: flex;
+    width: 150px;
+    padding: 0px 20px;
+}
+.newSampleSelectContainer select {
+    display: block;
+    width: 100px;
+    margin: 20px auto;
+}
+.newSampleSelectContainer select:hover {
+    cursor: pointer;
+}
+.newSampleSelectContainer button:hover {
+    cursor: pointer;
+    background-color: rgb(122, 183, 252, 40%);
+}
+
+/* SAMPLE UPLOAD */
+.sampleUploadContainer {
+    width: 430px;
+    height: 60px;
+    display: flex;
+}
+.sampleUploadContainer #sampleUpload {
+    width: 180px;
+    height: 20px;
+    margin: auto 0px;
+}
+.sampleUploadContainer #sampleUploadName {
+    height: 20px;
+    margin: auto 0px;
+    padding: 0px;
+}
+.sampleUploadContainer button:hover {
+    cursor: pointer;
+    background-color: rgb(122, 183, 252, 40%);
+}
+
+/* USERS ONLINE TEXT */
+.userCountContainer {
+    height: 60px;
+}
+.userCountContainer p {
+    height: 20px;
+    margin: 20px 0px;
+}
+
+/* CHANNEL CONTROL */
+.channel .channel-ctrl {
+    margin: 0px 20px;
+}
+.channel .channel-ctrl p {
+    text-align: center;
+    margin: 0px;
+}
+.channel .channel-ctrl button {
+    border: black solid 2px;
+    padding: 10px;
+    margin: 0px 5px;
+    border-radius: 12px;
+}
+.remove:hover {
+    background-color: rgb(255, 0, 0, 40%);
+    border: solid;
+    cursor: pointer;
+}
+.clear:hover {
+    background-color: rgb(255, 0, 0, 40%);
+    border: black solid 2px;
+    cursor: pointer;
+}
+.channel .channel-ctrl .vSlider {
+    margin: 0px 2px;
+    position: relative;
+    top: 0px;
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    width: 53%; /* Full-width */
+    height: 10px; /* Specified height */
+    background: #a3a3a3; /* Grey background */
+    outline: none; /* Remove outline */
+    opacity: 0.7;
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+}
+.channel .channel-ctrl .vSlider:hover {
+    opacity: 1;
+}
+.channel .channel-ctrl .vSlider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 20px; /* Set a specific slider handle width */
+    height: 20px; /* Slider handle height */
+    border-radius: 12px;
+    background: rgb(122, 183, 252); /* Green background */
+    cursor: pointer; /* Cursor on hover */
+} 
+.channel .channel-ctrl .vSlider::-moz-range-thumb {
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: rgb(122, 183, 252, 40%); /* Green background */
+    cursor: pointer; /* Cursor on hover */
 }
 
 /* CSS FOR CHANNELS */
-
 .channel {
     padding-bottom: 10px ;
     display: flex;
     justify-content: space-evenly;
 }
-
-.channel .channel-ctrl {
-    padding: 0px 20px;
-}
-
-.channel .channel-ctrl p {
-    text-align: center;
-}
-
 .channel button {
     border: black solid 2px;
-    padding: 30px 20px;
+    padding: 30px;
     margin: 0px 5px;
     border-radius: 12px;
 }
-
 .channel button:hover {
     cursor: pointer;
     border: black dotted 2px;
@@ -142,7 +256,6 @@ nav ul li a:hover {
 .channel button:focus { 
     outline:0;
 }
-
 .cursor {
     position: absolute;
     background: black;

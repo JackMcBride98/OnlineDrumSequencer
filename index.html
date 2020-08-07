@@ -4,6 +4,13 @@
         <meta charset="utf-8">
         <title>Online Drum Sequencer</title>
         <link rel='stylesheet' href='styles.css'>
+        
+        <!-- MATERIAL ICONS LINK -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <!-- GOOGLE FONT LINK -->
+        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+        
         <style>
             
         </style>
@@ -14,7 +21,7 @@
             <h1>
                 Online Drum Sequencer
             </h1>
-            <p>Make Drum Patterns Online</p>
+            <p>Make Drum Patterns Online with Other People</p>
         </header>
 
         <nav>
@@ -26,24 +33,41 @@
 
         <div class="drumMachine">
             <div class = "controls">
-                <button id="play">Play </button>
-                <button id="pause">Pause </button>
-                <button id="stop">Stop</button>
-                <p>bpm</p>
-
-                <input type="range" min="10" max="400" value="100" class="slider" id="bpmSlider">
-                <p id="bpmValue">100</p>
-                <p>swing</p>
-                <input type="range" min="0" max="100" value="0" class="slider" id="swingSlider">
-                <p id="swingValue">0</p>
-                <select id="newSampleSelect">
-                </select>
-                <button id = "addSampleButton">Add Sample</button>
-                <input type="file" id="sampleUpload" accept="audio/*">
-                <input type="text" id="sampleUploadName">
-                <button id ="sampleUploadButton">Upload Sample</button>
-                <p>Users Online: </p>
-                <p id="userCount">0</p>
+                
+                <div class="controlBtnContainer">
+                    <button id="play"><i class="material-icons">play_arrow</i></button>
+                    <button id="pause"><i class="material-icons">pause</i></button>
+                    <button id="stop"><i class="material-icons">stop</i></button>
+                </div>
+                
+                <div class="bpmSliderContainer">
+                    <label for="bpmSlider">BPM</label>
+                    <input type="range" min="10" max="400" value="100" class="slider" id="bpmSlider">
+                    <label id="bpmValue" for="bpmSlider">100</label>
+                </div>
+                
+                <div class="swingSliderContainer">
+                    <label for="swingSlider">SWING</label>
+                    <input type="range" min="0" max="100" value="0" class="slider" id="swingSlider">
+                    <label id="swingValue" for="swingSlider">0</label>
+                </div>
+                
+                <div class="newSampleSelectContainer">
+                    <select id="newSampleSelect">
+                    </select>
+                    <button id = "addSampleButton"><i class="material-icons">add</i></button>
+                </div>
+                
+                <div class="sampleUploadContainer">
+                    <input type="file" id="sampleUpload" accept="audio/*">
+                    <input type="text" id="sampleUploadName">
+                    <button id ="sampleUploadButton"><i class="material-icons">publish</i></button>
+                </div>
+                
+                <div class="userCountContainer">
+                    <p>Users Online: <span id="userCount">0</span></p>
+                </div>
+                
             </div>
 
             <div class = "channel-container"></div>

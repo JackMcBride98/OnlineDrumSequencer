@@ -95,20 +95,26 @@ $(function(){
     })
 
     function addSample(i){
-        channelContainer.append("<div class = 'channel' id = c"+ i +"><div class = 'channel-ctrl'><p>"+ channelNames[i] +"</p> <input type='range' min='0' max='100' value='80' class='vSlider' id='channel"+ i +"Slider'><button class='remove'>X</button><button class='clear'>clear</button></div></div>");
+        channelContainer.append("<div class = 'channel' id = c"+ i +"><div class = 'channel-ctrl'><p>"+ channelNames[i] +"</p> <input type='range' min='0' max='100' value='80' class='vSlider' id='channel"+ i +"Slider'><button class='remove'>X</button><button class='clear'>clear</button></div><div class='channelBtns'></div></div>");
         channel = $('.channel#c'+i);
         for(let j = 0; j < steps; j++){
-            channel.append("<button id ='c"+i+"b"+j+"'> </button>")
+            channel.append("<button id ='c"+i+"b"+j+"'> </button>");
             if(j % 4 == 0 && j != 0){
-                $('.channel#c'+i+ " button#c"+i+"b"+j).css('margin-left', '25px')
+                $('.channel#c'+i+ " button#c"+i+"b"+j).css('margin-left', '25px');
             }
             if(buttonStates[i][j] === ""){
-                $('.channel#c'+i+ " button#c"+i+"b"+j).css('background','white')
+                $('.channel#c'+i+ " button#c"+i+"b"+j).css('background','white');
             }
             else{
-                $('.channel#c'+i+ " button#c"+i+"b"+j).css('background',buttonStates[i][j])
+                $('.channel#c'+i+ " button#c"+i+"b"+j).css('background',buttonStates[i][j]);
             }
         }
+        
+        // ATTEMPT AT SPACING EVERY 4 CHANNELS BY 30PX
+        // if((i + 1) % 4 == 0 && i != 0){
+        //     $('.channel#c'+i).css('padding-bottom', '30px');
+        // }  
+
         $('#channel'+i+'Slider').val(volValues[i]);
 
         $('.channel#c'+i+' > button').click(function(){
