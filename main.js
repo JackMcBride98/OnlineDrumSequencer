@@ -119,9 +119,8 @@ $(function(){
 
         // Made slight tweaks to this code to accomodate for new div that contains just the channel buttons
         $('.channel#c'+i+' .channelBtns button').click(function(){
-            var parentID = $(this).attr("id");
             var ID = this.id;
-            row = parentID.split('c')[1][0];
+            row = ID.split('b')[0].split('c')[1];
             column = ID.split('b')[1];
             socket.emit('button click', {row: row, column: column})
         })
