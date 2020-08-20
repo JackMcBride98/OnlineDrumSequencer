@@ -187,19 +187,18 @@ input.slider::-moz-range-thumb {
     margin: 0px;
 }
 .channel .channel-ctrl button {
+    background-color: white;
     border: black solid 2px;
     padding: 10px;
     margin: 0px 5px;
     border-radius: 12px;
 }
-.remove:hover {
+button.remove:hover {
     background-color: rgb(255, 0, 0, 40%);
-    border: solid;
     cursor: pointer;
 }
-.clear:hover {
+button.clear:hover {
     background-color: rgb(255, 0, 0, 40%);
-    border: black solid 2px;
     cursor: pointer;
 }
 .channel .channel-ctrl .vSlider {
@@ -241,13 +240,13 @@ input.slider::-moz-range-thumb {
     display: flex;
     justify-content: space-evenly;
 }
-.channel button {
+.channel .channelBtns button {
     border: black solid 2px;
     padding: 30px;
     margin: 0px 5px;
     border-radius: 12px;
 }
-.channel button:hover {
+.channel .channelBtns button:hover {
     cursor: pointer;
     border: black dotted 2px;
 }
@@ -264,24 +263,29 @@ input.slider::-moz-range-thumb {
     border-radius: 10px;
 }
 
+
+
+
 /* ABOUT */
 /* DESCRIPTIONS */
-
 .about {
     display: flex;
     width: 80%;
     margin: auto;
     margin-bottom: 40px;
 }
-
 .about img {
     width: 30%;
     height: 30%;
     object-fit: cover;
-    border-radius: 50%;
     margin: 20px;
 }
-
-.about h1 {
-
+.about-text {
+    margin: auto;
+}
+#jackText {
+    margin-right: 50px;
+}
+#jackH1 {
+    text-align: right;
 }

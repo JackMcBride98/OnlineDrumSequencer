@@ -96,7 +96,7 @@ $(function(){
 
     function addSample(i){
         channelContainer.append("<div class = 'channel' id = c"+ i +"><div class = 'channel-ctrl'><p>"+ channelNames[i] +"</p> <input type='range' min='0' max='100' value='80' class='vSlider' id='channel"+ i +"Slider'><button class='remove'>X</button><button class='clear'>clear</button></div><div class='channelBtns'></div></div>");
-        channel = $('.channel#c'+i);
+        channel = $('.channel#c'+i+' .channelBtns');
         for(let j = 0; j < steps; j++){
             channel.append("<button id ='c"+i+"b"+j+"'> </button>");
             if(j % 4 == 0 && j != 0){
@@ -117,10 +117,11 @@ $(function(){
 
         $('#channel'+i+'Slider').val(volValues[i]);
 
-        $('.channel#c'+i+' > button').click(function(){
-            var parentID = $(this).parent().attr("id");
+        // Made slight tweaks to this code to accomodate for new div that contains just the channel buttons
+        $('.channel#c'+i+' .channelBtns button').click(function(){
+            var parentID = $(this).attr("id");
             var ID = this.id;
-            row = parentID.split('c')[1];
+            row = parentID.split('c')[1][0];
             column = ID.split('b')[1];
             socket.emit('button click', {row: row, column: column})
         })
@@ -204,12 +205,12 @@ $(function(){
                 channelAudio[i].play()
 
             }
-            $('.channel > button#c'+ i +'b'+step).css('opacity',0.5)
+            $('.channelBtns button#c'+ i +'b'+step).css('opacity',0.5)
             let stepBefore = step-1;
             if (stepBefore < 0){
                 stepBefore = steps-1;
             }
-            $('.channel > button#c'+ i +'b'+stepBefore).css('opacity',1)
+            $('.channelBtns button#c'+ i +'b'+stepBefore).css('opacity',1)
         }
 
 
@@ -236,7 +237,7 @@ $(function(){
             timestep = 0;
             channelAudio.forEach(function(audio){audio.pause()})
         }
-        $('.channel > button').css('opacity',1)
+        $('.channel button').css('opacity',1)
     })
 
     pauseButton.click(function(){
@@ -325,11 +326,11 @@ $(function(){
     
     socket.on('button click', function(data){
         if (data.state){
-            $('.channel#c'+data.row+ " button#c"+data.row+"b"+data.column).css('background',data.colour)
+            $('.channel#c'+data.row+ " .channelBtns button#c"+data.row+"b"+data.column).css('background',data.colour)
             buttonStates[data.row][data.column] = data.colour;
         }
         else{
-            $('.channel#c'+data.row+ " button#c"+data.row+"b"+data.column).css('background','white')
+            $('.channel#c'+data.row+ " .channelBtns button#c"+data.row+"b"+data.column).css('background','white')
             buttonStates[data.row][data.column] = "";
         }
     })
@@ -340,7 +341,9 @@ $(function(){
     })
 
     socket.on('clear',function(data){
+        console.log('Clearing');
+        console.log(data);
         buttonStates[data].fill("");
-        $('.channel#c'+data+ " > button").css('background','white');
+        $('.channel#c'+data+ " button").css('background','white');
     })
 })
