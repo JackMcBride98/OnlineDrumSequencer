@@ -17,8 +17,8 @@ var buttonStates = Array(channels).fill().map(() => Array(steps).fill("") );
 var bpm = 100;
 var swing = 0;
 var colours = [];
-var channelNames = ["kick", "snare", "hat", "bongo", "george","kick2","clap"];
-var fileNames = ["kick.wav","snare.wav","hat.wav","bongo.wav","george.wav","kick2.wav","clap.wav"]
+var channelNames = ["kick", "snare", "hat", "crash", "george","kick2","clap"];
+var fileNames = ["kick.wav","snare.wav","hat.wav","crashHold.wav","george.wav","kick2.wav","clap.wav"]
 var volValues = Array(channels).fill(80);
 var channelStates = Array(channels).fill(true);
 channelStates[5] = false;

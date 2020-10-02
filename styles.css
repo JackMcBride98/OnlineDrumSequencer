@@ -268,24 +268,18 @@ button.clear:hover {
 
 /* ABOUT */
 /* DESCRIPTIONS */
-.about {
-    display: flex;
-    width: 80%;
-    margin: auto;
-    margin-bottom: 40px;
+.aboutContainer {
+    display: grid;
+    margin-top: 100px;
+    justify-content: center;
+    grid-template-columns: 500px 500px;
+    grid-column-gap: 50px;
 }
-.about img {
-    width: 30%;
-    height: 30%;
-    object-fit: cover;
-    margin: 20px;
+
+.aboutContainer img {
+    width: 500px;
+    height: 330px;
+    border: 2px black solid;
+    border-radius: 12px;
 }
-.about-text {
-    margin: auto;
-}
-#jackText {
-    margin-right: 50px;
-}
-#jackH1 {
-    text-align: right;
-}
+
