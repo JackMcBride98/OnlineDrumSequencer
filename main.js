@@ -50,7 +50,9 @@ $(function(){
     var newSampleSelect = $('#newSampleSelect')
 
     addSampleButton.click(function(){
-        socket.emit('add sample', newSampleSelect.val())
+        if (newSampleSelect.val() != null){
+            socket.emit('add sample', newSampleSelect.val());
+        }
     })
 
     socket.on('add sample', function(data){
@@ -110,11 +112,6 @@ $(function(){
             }
         }
         
-        // ATTEMPT AT SPACING EVERY 4 CHANNELS BY 30PX
-        // if((i + 1) % 4 == 0 && i != 0){
-        //     $('.channel#c'+i).css('padding-bottom', '30px');
-        // }  
-
         $('#channel'+i+'Slider').val(volValues[i]);
 
         // Made slight tweaks to this code to accomodate for new div that contains just the channel buttons
