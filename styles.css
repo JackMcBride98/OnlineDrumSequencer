@@ -263,8 +263,19 @@ button.clear:hover {
     border-radius: 10px;
 }
 
-
-
+/* HOW TO SECTION */
+.howtoContainer {
+    margin: 65px 25% 0px;
+    width: 50%;
+}
+#howtoTitle {
+    text-align: center;
+}
+i.howtoIcon {
+    position: relative;
+    font-size: 1em;
+    top: 3px;
+}
 
 /* ABOUT */
 /* DESCRIPTIONS */
@@ -275,11 +286,9 @@ button.clear:hover {
     grid-template-columns: 500px 500px;
     grid-column-gap: 50px;
 }
-
 .aboutContainer img {
     width: 500px;
     height: 500px;
     border: 2px black solid;
     border-radius: 12px;
 }
-
