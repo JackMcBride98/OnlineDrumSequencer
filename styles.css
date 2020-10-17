@@ -271,6 +271,9 @@ button.clear:hover {
 #howtoTitle {
     text-align: center;
 }
+.howtoContainer h4 {
+    text-align: center;
+}
 i.howtoIcon {
     position: relative;
     font-size: 1em;
