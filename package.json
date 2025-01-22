@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/Muccy98/OnlineDrumSequencer#readme",
   "dependencies": {
-    "express": "^4.21.1",
+    "express": "^4.21.2",
     "socket.io": "^4.8.0",
     "socketio-file-upload": "^0.7.2"
   }
